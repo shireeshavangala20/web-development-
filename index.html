@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brown Sugar Bakery | Cakes, Ice Creams & Chocolates</title>
+
+  <!-- ===========================================================
+       EXTERNAL LIBRARIES (loaded from CDN, no installation needed)
+       1. Bootstrap 5  -> grid system, navbar, accordion, offcanvas, toast
+       2. Bootstrap Icons -> star icons, cart icon, social icons
+       3. Google Fonts -> Playfair Display (headings) + Poppins (body text)
+  =========================================================== -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Our own custom stylesheet (always loaded AFTER Bootstrap so our styles win) -->
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===========================================================
+       PRELOADER
+  =========================================================== -->
+  <div id="preloader">
+    <div class="loader-icon">
+      <i class="bi bi-cake2"></i>
+    </div>
+  </div>
+
+  <!-- ===========================================================
+       NAVIGATION BAR
+  =========================================================== -->
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+    <div class="container">
+      <a class="navbar-brand" href="#home">
+        <i class="bi bi-cake2"></i> Brown<span class="text-gold">Sugar</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+          <li class="nav-item ms-lg-2">
+            <button class="btn cart-btn" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+              <i class="bi bi-bag"></i>
+              <span class="cart-count" id="cartCount">0</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===========================================================
+       HERO SECTION
+  =========================================================== -->
+  <header class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <p class="hero-eyebrow reveal">Est. in a small Telangana kitchen</p>
+          <h1 class="hero-title reveal">Baked warm.<br>Served with <span class="text-gold">gold-standard</span> care.</h1>
+          <p class="hero-subtitle reveal">Handmade cakes, creamy ice creams and small-batch chocolates —
+            made fresh every morning, never the night before.</p>
+          <div class="hero-buttons reveal">
+            <a href="#menu" class="btn btn-gold btn-lg">Explore Menu</a>
+            <a href="#about" class="btn btn-outline-cream btn-lg">Our Story</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fresh-stamp d-none d-md-flex">
+      <span>Fresh&nbsp;•&nbsp;Baked&nbsp;•&nbsp;Daily</span>
+    </div>
+
+    <a href="#menu" class="scroll-indicator" aria-label="Scroll to menu">
+      <i class="bi bi-chevron-down"></i>
+    </a>
+  </header>
+
+  <!-- ===========================================================
+       MENU SECTION
+  =========================================================== -->
+  <section class="section" id="menu">
+    <div class="container">
+      <p class="section-eyebrow text-center reveal">What we make</p>
+      <h2 class="section-title text-center reveal">Our Menu</h2>
+      <p class="section-subtitle text-center reveal">Every item below is rendered by JavaScript from a single
+        product list — search or filter to see it update instantly.</p>
+
+      <div class="row justify-content-center reveal">
+        <div class="col-md-6">
+          <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" id="searchInput" placeholder="Search for cakes, ice creams, chocolates...">
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-category="all">All Items</button>
+        <button class="filter-btn" data-category="cake">Cakes</button>
+        <button class="filter-btn" data-category="icecream">Ice Creams</button>
+        <button class="filter-btn" data-category="chocolate">Chocolates</button>
+      </div>
+
+      <div class="row g-4 mt-2" id="productGrid"></div>
+
+      <div id="noResults" class="text-center py-5 d-none">
+        <i class="bi bi-emoji-frown"></i>
+        <p class="mt-3">No items match your search. Try a different keyword.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================
+       ABOUT US
+  =========================================================== -->
+  <section class="section section-cream" id="about">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 reveal">
+          <img src="images/about-bakery.jpg"
+               onerror="this.src='https://placehold.co/700x550/4A2C2A/FFF8EE?text=Our+Bakery'"
+               alt="Inside Brown Sugar Bakery" class="img-fluid about-img">
+        </div>
+        <div class="col-lg-6 reveal">
+          <p class="section-eyebrow">About Us</p>
+          <h2 class="section-title">A small bakery, built on family recipes</h2>
+          <p class="about-text">
+            Brown Sugar Bakery started as a single oven in a home kitchen, baking cakes for neighbours
+            and friends. What began as a hobby slowly turned into a small shop that still follows the
+            same recipes — just with a few more ovens and a much bigger sweet tooth to satisfy.
+          </p>
+          <p class="about-text">
+            We believe good baking does not need shortcuts. Our cakes are layered by hand, our ice
+            creams are churned in small batches, and our chocolates are tempered the slow way. No
+            preservatives, no overnight batters — just things made the morning you eat them.
+          </p>
+          <div class="row mt-4 about-stats">
+            <div class="col-4">
+              <h3>6+</h3><p>Years Baking</p>
+            </div>
+            <div class="col-4">
+              <h3>50+</h3><p>Recipes</p>
+            </div>
+            <div class="col-4">
+              <h3>2k+</h3><p>Happy Customers</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================
+       CUSTOMER REVIEWS
+  =========================================================== -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <p class="section-eyebrow text-center reveal">Kind words</p>
+      <h2 class="section-title text-center reveal">What Our Customers Say</h2>
+
+      <div class="row g-4 mt-3">
+        <div class="col-md-4 reveal">
+          <div class="review-card">
+            <div class="review-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            <p>"The Belgian chocolate cake tasted like it came from a proper patisserie, not a small
+              local bakery. Ordered it twice for birthdays already."</p>
+            <div class="review-author">
+              <div class="avatar">A</div>
+              <div>
+                <h6>Ananya Reddy</h6>
+                <span>Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 reveal">
+          <div class="review-card">
+            <div class="review-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
+            <p>"Their hazelnut praline bar is dangerously good. I keep one in my bag at all times
+              now, which is probably not great for my diet."</p>
+            <div class="review-author">
+              <div class="avatar">K</div>
+              <div>
+                <h6>Karthik Rao</h6>
+                <span>Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 reveal">
+          <div class="review-card">
+            <div class="review-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            <p>"Ordered the mango ice cream tub for a family get-together and it was gone in ten
+              minutes. Will definitely be a regular customer."</p>
+            <div class="review-author">
+              <div class="avatar">S</div>
+              <div>
+                <h6>Sneha Patil</h6>
+                <span>Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================
+       FAQ
+  =========================================================== -->
+  <section class="section section-cream" id="faq">
+    <div class="container">
+      <p class="section-eyebrow text-center reveal">Good to know</p>
+      <h2 class="section-title text-center reveal">Frequently Asked Questions</h2>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8 reveal">
+          <div class="accordion" id="faqAccordion">
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  Do you take custom cake orders?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">Yes! We love custom orders. Share your design ideas and flavour
+                  preferences through the contact form at least 48 hours before you need the cake.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  What are your delivery areas?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">We currently deliver across Kamareddy and nearby areas within a
+                  15 km radius. Pickup is always available from our store.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  Are your cakes available without eggs?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">Most of our cakes have an eggless version. Just mention your
+                  preference in the message field when you place an order.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                  Can I actually pay and checkout on this website?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">This site is a front-end college project, so the cart and
+                  checkout button are fully working in the browser (with Local Storage), but there is no
+                  real payment gateway connected behind it.</div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                  How fresh are the products, really?
+                </button>
+              </h2>
+              <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">Everything is baked and prepared fresh every morning. We do not
+                  store finished items overnight.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================
+       CONTACT US
+  =========================================================== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <p class="section-eyebrow text-center reveal">Get in touch</p>
+      <h2 class="section-title text-center reveal">Contact Us</h2>
+
+      <div class="row g-5 mt-3">
+        <div class="col-lg-5 reveal">
+          <div class="contact-info-card">
+            <h5><i class="bi bi-geo-alt-fill"></i> Address</h5>
+            <p>12-3-45, Main Bazaar Road, Kamareddy, Telangana 503111</p>
+
+            <h5><i class="bi bi-telephone-fill"></i> Phone</h5>
+            <p>+91 98765 43210</p>
+
+            <h5><i class="bi bi-envelope-fill"></i> Email</h5>
+            <p>hello@brownsugarbakery.com</p>
+
+            <h5><i class="bi bi-clock-fill"></i> Hours</h5>
+            <p>Mon – Sat: 8:00 AM – 9:00 PM<br>Sunday: 9:00 AM – 6:00 PM</p>
+          </div>
+        </div>
+
+        <div class="col-lg-7 reveal">
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Your Email</label>
+                <input type="email" class="form-control" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" rows="4" required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-gold btn-lg">Send Message</button>
+              </div>
+              <div class="col-12">
+                <div id="formSuccess" class="alert alert-success d-none mt-2">
+                  Thank you! Your message has been received. We'll get back to you soon.
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================
+       FOOTER
+  =========================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h4 class="footer-logo"><i class="bi bi-cake2"></i> Brown<span class="text-gold">Sugar</span></h4>
+          <p>Cakes, ice creams and chocolates made fresh every day, the slow and honest way.</p>
+          <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6">
+          <h6>Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-6">
+          <h6>Categories</h6>
+          <ul class="footer-links">
+            <li><a href="#menu">Cakes</a></li>
+            <li><a href="#menu">Ice Creams</a></li>
+            <li><a href="#menu">Chocolates</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4">
+          <h6>Newsletter</h6>
+          <p>Get notified about new flavours and weekend offers.</p>
+          <form id="newsletterForm" class="newsletter-form">
+            <input type="email" placeholder="Your email address" required>
+            <button type="submit"><i class="bi bi-send-fill"></i></button>
+          </form>
+          <small id="newsletterMsg" class="d-none">Subscribed! Thank you.</small>
+        </div>
+      </div>
+
+      <hr>
+      <div class="text-center footer-bottom">
+        <p>&copy; <span id="year"></span> Brown Sugar Bakery. Designed &amp; developed by Your Name.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===========================================================
+       BACK TO TOP BUTTON
+  =========================================================== -->
+  <button id="backToTop" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <!-- ===========================================================
+       SHOPPING CART OFFCANVAS
+  =========================================================== -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header">
+      <h5><i class="bi bi-bag"></i> Your Cart</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="cartItems" class="cart-items flex-grow-1"></div>
+
+      <div class="cart-summary">
+        <div class="d-flex justify-content-between cart-total-row">
+          <span>Total</span>
+          <span id="cartTotal">₹0</span>
+        </div>
+        <button class="btn btn-gold w-100 mt-3" id="checkoutBtn">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================================================
+       TOAST
+  =========================================================== -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="cartToast" class="toast" role="alert">
+      <div class="toast-body">
+        <i class="bi bi-check-circle-fill text-gold"></i>
+        <span id="toastMessage">Item added to cart!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================================================
+       SCRIPTS
+  =========================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
